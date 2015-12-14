@@ -15,7 +15,7 @@ public class EntityManagerUtil implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		emf = Persistence.createEntityManagerFactory("default");
+		initialize();
 	}
 
 	@Override
@@ -26,6 +26,10 @@ public class EntityManagerUtil implements ServletContextListener {
 		if (emf != null) {
 			emf.close();
 		}
+	}
+
+	public static void initialize() {
+		emf = Persistence.createEntityManagerFactory("default");
 	}
 
 	private static EntityManager createEntityManager() {

@@ -2,9 +2,6 @@ package codigoalvo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,9 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -22,8 +16,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(indexes = { @Index(name = "idx_usuario_login_unique", columnList = "login", unique = true),
-		@Index(name = "idx_usuario_email_unique", columnList = "email", unique = true) })
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 4860641136563274996L;
@@ -68,15 +60,25 @@ public class Usuario implements Serializable {
 
 	private Integer tentativasLoginInvalido;
 
-	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="usuario")
-	private List<Categoria> categorias;
+//	@OneToMany(cascade=CascadeType.ALL)
+//	@JoinColumn(name="USUARIO_ID")
+//	private List<Categoria> categorias = new ArrayList<Categoria>();
+
+//	public List<Categoria> getCategorias() {
+//		return categorias;
+//	}
+//
+//	public void setCategorias(List<Categoria> categorias) {
+//		this.categorias = categorias;
+//	}
 
 	public Usuario() {
 	}
 
-	public Usuario(String login, String nome, String email, UsuarioTipo tipo) {
+	public Usuario(String login, String senha, String nome, String email, UsuarioTipo tipo) {
 		super();
 		this.login = login;
+		this.senha = senha;
 		this.nome = nome;
 		this.email = email;
 		this.tipo = tipo;

@@ -30,4 +30,9 @@ public class UsuarioDaoJpa extends GenericDaoJpa<Usuario> implements UsuarioDao 
 		return buscarPor("login", login);
 	}
 
+	@Override
+	public void remove(final Usuario usuario) {
+		getEntityManager().remove(usuario);
+	}
+
 }

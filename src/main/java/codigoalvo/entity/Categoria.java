@@ -4,18 +4,20 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(indexes = {	@Index(name = "idx_categoria_nome_unique", columnList = "nome, usuario_id", unique = true) })
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = -4407612096913713967L;
@@ -29,9 +31,9 @@ public class Categoria implements Serializable {
 	@Length(max = 100)
 	private String nome;
 
-	@ManyToOne(cascade=CascadeType.REMOVE)
-//	@JoinColumn(//columnDefinition = "usuario_id INT CONSTRAINT fk_categoria_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE")
-//	foreignKey = @ForeignKey(name="fk_categoria_usuario", foreignKeyDefinition="fk_categoria_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE"))
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(foreignKey = @ForeignKey(name="fk_categoria_usuario"))
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private	Usuario usuario;
 
 	public Categoria() {
